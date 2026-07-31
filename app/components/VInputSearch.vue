@@ -12,7 +12,7 @@ const attrs = useAttrs() as InputHTMLAttributes;
 
 <style scoped lang="scss">
 .search-wrap {
-  border-radius: 3px;
+  border-radius: $default-radius;
   box-shadow: $default-shadow;
   position: relative;
   padding-right: 32px;
