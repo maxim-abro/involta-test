@@ -121,7 +121,6 @@ const selectPage = async (page: number) => {
   &__item {
     font-size: 18px;
     font-weight: 700;
-    background: none;
     &:disabled {
       cursor: default;
     }
