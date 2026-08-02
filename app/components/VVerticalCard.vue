@@ -6,7 +6,13 @@
   </div>
 
   <div class="card__bottom">
-    <a class="card__bottom__link" :href="link">Подробнее</a>
+    <a
+        class="card__bottom__link"
+        :href="link"
+        target="_blank"
+    >
+      Подробнее
+    </a>
     <div class="card__bottom__footer">
       <div class="card__bottom__footer__source">{{ source }}</div>
       <div class="card__bottom__footer__date">{{ dateText }}</div>
@@ -44,11 +50,12 @@ const dateText = computed(() => {
   &__top {
     &__title {
       margin-bottom: 25px;
-      font-size: 28px;
+      font-size: 18px;
       font-weight: 700;
       color: $primary-color;
     }
     &__description {
+      font-size: 14px;
       margin-bottom: 20px;
     }
   }
@@ -73,11 +80,7 @@ const dateText = computed(() => {
     padding: 30px 22px 4px;
     &__top {
       &__title {
-        font-size: 18px;
         margin-bottom: 20px;
-      }
-      &__description {
-        font-size: 14px;
       }
     }
     &__bottom {

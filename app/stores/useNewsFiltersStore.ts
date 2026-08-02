@@ -1,11 +1,14 @@
+import { defineStore } from "pinia";
 import type {IRssItem} from "#shared/types/rss.ts";
 
 
-export const useNewsFilters = (news: Ref<IRssItem[] | null>) => {
+export const useNewsFiltersStore = defineStore('useNewsFiltersStore', () => {
   const itemsPerPage = 6;
 
   const route = useRoute();
   const router = useRouter();
+
+  const news = ref<IRssItem[]>([]);
 
   const getQueryValue = (value: unknown) => {
     return Array.isArray(value) ? value[0] : value;
@@ -85,9 +88,15 @@ export const useNewsFilters = (news: Ref<IRssItem[] | null>) => {
     return filteredItems.value.slice(start, end);
   });
 
+  const setNews = (items: IRssItem[]) => {
+    console.log('work')
+    news.value = items;
+  }
+
   return {
     clearFilters,
     updateQuery,
+    setNews,
 
     totalPageItems,
     activeSource,
@@ -95,4 +104,4 @@ export const useNewsFilters = (news: Ref<IRssItem[] | null>) => {
     search,
     page,
   }
-}
+});

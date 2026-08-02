@@ -11,8 +11,17 @@
     </div>
 
     <div class="card__bottom">
-      <a class="card__bottom__source" :href="link" target="_blank" rel="noopener noreferrer">{{source}}</a>
-      <div class="card__bottom__date">{{dateText}}</div>
+      <a
+          class="card__bottom__link"
+          :href="link"
+          target="_blank"
+      >
+        Подробнее
+      </a>
+      <div class="card__bottom__footer">
+        <div class="card__bottom__footer__source">{{source}}</div>
+        <div class="card__bottom__footer__date">{{dateText}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -86,21 +95,27 @@ const dateText = computed(() => {
   }
 
   &__bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #FCFCFC;
-    color: $second-color;
-    font-size: 14px;
     padding: 4px 30px;
-
-    &__source {
-      color: inherit;
-      text-decoration: underline;
+    &__link {
+      display: block;
+      margin-bottom: 12px;
+      color: $primary-color;
     }
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #FCFCFC;
+      color: $second-color;
+      font-size: 14px;
+      &__source {
+        color: inherit;
+        text-decoration: underline;
+      }
 
-    &__date {
-      color: inherit;
+      &__date {
+        color: inherit;
+      }
     }
   }
 }

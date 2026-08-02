@@ -60,30 +60,42 @@
 import type { TOrientation } from "~/types/types.ts";
 import {useNewsFilters} from "~/composables/useNewsFilters.ts";
 import {useLocalStorage} from "~/composables/useLocalStorage.ts";
+import {storeToRefs} from "pinia";
+import {useNewsFiltersStore} from "~/stores/useNewsFiltersStore.ts";
 
-const { data: items, status } = await useAsyncData('news', () => $fetch('/api/rss'));
-
-const news = computed(() => items.value ?? []);
+const { data: items, status, pending } = await useAsyncData('news', () => $fetch('/api/rss'));
 
 const isError = computed(() => status.value === 'error');
 const isNewsEmpty = computed(() => totalPageItems.value.length === 0);
 
 const cardsOrientation = useLocalStorage<TOrientation>('cards-orientation', 'horizontal');
+const newsFiltersStore = useNewsFiltersStore();
 
 const {
-  clearFilters,
-  updateQuery,
   totalPageItems,
   activeSource,
   totalPages,
   search,
   page,
-} = useNewsFilters(news);
+} = storeToRefs(newsFiltersStore);
+
+const {
+  clearFilters,
+  updateQuery,
+  setNews,
+} = newsFiltersStore;
 
 watch(totalPages, (value) => {
   if (page.value > value) {
     updateQuery({ page: value > 1 ? value : null });
   }
+});
+watch(pending, (value) => {
+  if (!value) {
+    setNews(items.value ?? []);
+  }
+}, {
+  immediate: true,
 });
 </script>
 
@@ -96,20 +108,12 @@ watch(totalPages, (value) => {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
   &.vertical {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 hr {
   margin: 36px 0 25px;
-}
-
-@media (max-width: 1280px) {
-  .wrap-cards {
-    &.vertical {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
 }
 
 @media(max-width: 720px) {
