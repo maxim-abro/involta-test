@@ -7,7 +7,7 @@ const parser = new Parser()
 export default defineEventHandler(async () => {
   const results = await Promise.allSettled(
     rssSources.map(async (source) => {
-      const feed = await parser.parseURL(source.url)
+      const feed = await parser.parseURL(source.url);
 
       return feed.items.map<IRssItem>((item) => ({
         sourceId: source.id,
@@ -16,9 +16,10 @@ export default defineEventHandler(async () => {
         link: item.link,
         date: item.isoDate || item.pubDate,
         description: item.contentSnippet,
-      }))
+        image: item?.enclosure?.url,
+      }));
     }),
-  )
+  );
 
   return results
     .filter((result) => result.status === 'fulfilled')

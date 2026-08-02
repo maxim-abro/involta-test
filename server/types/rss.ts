@@ -5,4 +5,5 @@ export interface IRssItem {
   link?: string
   date?: string
   description?: string
+  image?: string
 }
