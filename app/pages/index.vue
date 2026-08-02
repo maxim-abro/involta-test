@@ -96,4 +96,20 @@ watch(pending, () => {
 hr {
   margin: 36px 0 25px;
 }
+
+@media (max-width: 1280px) {
+  .wrap-cards {
+    &.vertical {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media(max-width: 720px) {
+  .wrap-cards {
+    &.vertical {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+}
 </style>

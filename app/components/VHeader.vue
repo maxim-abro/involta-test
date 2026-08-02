@@ -51,4 +51,20 @@ const clearFilters = () => emits('clear-filters');
     }
   }
 }
+@media screen and (max-width: 720px) {
+  .header {
+    flex-direction: column;
+    gap: 20px;
+    &__title {
+      width: 100%;
+      justify-content: space-between;
+      &__text {
+        font-size: 24px;
+      }
+    }
+    &__input {
+      width: 100%;
+    }
+  }
+}
 </style>

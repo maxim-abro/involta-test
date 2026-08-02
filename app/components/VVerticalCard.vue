@@ -67,4 +67,27 @@ const dateText = computed(() => {
     }
   }
 }
+
+@media screen and (max-width: 720px) {
+  .card {
+    padding: 30px 22px 4px;
+    &__top {
+      &__title {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      &__description {
+        font-size: 14px;
+      }
+    }
+    &__bottom {
+      &__link {
+        margin-bottom: 16px;
+      }
+      &__footer {
+        font-size: 14px;
+      }
+    }
+  }
+}
 </style>

@@ -19,6 +19,7 @@ const attrs = useAttrs() as InputHTMLAttributes;
   box-shadow: $default-shadow;
   position: relative;
   padding-right: 32px;
+  background: #fff;
   &::after {
     content: "";
     position: absolute;
@@ -27,10 +28,11 @@ const attrs = useAttrs() as InputHTMLAttributes;
     height: 16px;
     width: 16px;
     transform: translateY(-50%);
-    background: url("~/assets/images/magnifier.svg") center / contain no-repeat;
+    background: #fff url("~/assets/images/magnifier.svg") center / contain no-repeat;
     pointer-events: none;
   }
  &__input {
+   width: calc(100% - 32px);
    border: none;
    padding: 10px 13px;
    &:focus {
