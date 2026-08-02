@@ -1,1 +1,1 @@
-export type TOrientationType = 'horizontal' | 'vertical';
+export type TOrientation = 'horizontal' | 'vertical';

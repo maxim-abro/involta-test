@@ -1,12 +1,15 @@
 <template>
   <div class="search-wrap">
-    <input v-bind="attrs" class="search-wrap__input">
+    <input v-bind="attrs" v-model="model" class="search-wrap__input">
   </div>
 </template>
 
 <script setup lang="ts">
 import type { InputHTMLAttributes } from "vue";
 
+const model = defineModel<string>({
+  default: '',
+});
 const attrs = useAttrs() as InputHTMLAttributes;
 </script>
 

@@ -1,5 +1,5 @@
 import Parser from 'rss-parser'
-import { rssSources } from '../data/rss-sources'
+import { rssSources } from '../../shared/data/rss-sources'
 import type { IRssItem } from '../types/rss'
 
 const parser = new Parser()

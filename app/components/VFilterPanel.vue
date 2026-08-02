@@ -53,11 +53,10 @@
 </template>
 
 <script setup lang="ts">
+import type { TOrientation } from "~/types/types.ts";
+import { rssSources } from "~~/shared/data/rss-sources";
 
-import type {TOrientationType} from "~/types/types.ts";
-import {rssSources} from "#server/data/rss-sources.ts";
-
-const activeOrientation = defineModel<TOrientationType>('orientation', {
+const activeOrientation = defineModel<TOrientation>('orientation', {
   required: true,
 });
 const activeSource = defineModel<string | null>('activeSource', {
@@ -68,7 +67,7 @@ const chooseSource = (source: string | null) => {
   activeSource.value = source;
 }
 
-const chooseOrientation = (orientation: TOrientationType) => {
+const chooseOrientation = (orientation: TOrientation) => {
   activeOrientation.value = orientation;
 }
 </script>

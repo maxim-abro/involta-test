@@ -1,6 +1,6 @@
 <template>
 <div>
-  <VHeader/>
+  <VHeader v-model:search="search"/>
   <hr>
   <VFilterPanel
     v-model:orientation="cardsOrientation"
@@ -42,19 +42,63 @@
 </template>
 
 <script setup lang="ts">
-import type { TOrientationType } from "~/types/types.ts";
+import type { TOrientation } from "~/types/types.ts";
 import type {IRssItem} from "#server/types/rss.ts";
 
 const itemsPerPage = 4;
+const route = useRoute();
+const router = useRouter();
 
 const { data: items } = await useFetch('/api/rss');
 
-const page = ref(1);
-const cardsOrientation = ref<TOrientationType>('horizontal');
-const activeSource = ref<string | null>(null);
+const getQueryValue = (value: unknown) => {
+  return Array.isArray(value) ? value[0] : value;
+};
 
-const totalPages = computed(() => {
-  return Math.ceil((items.value?.length ?? 0) / itemsPerPage);
+const updateQuery = (query: Record<string, string | number | null>) => {
+  const nextQuery = { ...route.query };
+
+  Object.entries(query).forEach(([key, value]) => {
+    if (value === null || value === '') {
+      delete nextQuery[key];
+      return;
+    }
+
+    nextQuery[key] = String(value);
+  });
+
+  router.replace({ query: nextQuery });
+};
+
+const page = computed({
+  get() {
+    const queryPage = Number(getQueryValue(route.query.page));
+
+    return Number.isInteger(queryPage) && queryPage > 0 ? queryPage : 1;
+  },
+  set(value: number) {
+    updateQuery({ page: value > 1 ? value : null });
+  },
+});
+
+const cardsOrientation = ref<TOrientation>('vertical');
+
+const activeSource = computed<string | null>({
+  get() {
+    return getQueryValue(route.query.source) ?? null;
+  },
+  set(value: string | null) {
+    updateQuery({ source: value, page: null });
+  },
+});
+
+const search = computed({
+  get() {
+    return getQueryValue(route.query.q) ?? '';
+  },
+  set(value: string) {
+    updateQuery({ q: value.trim(), page: null });
+  },
 });
 
 const filterItemsBySource = (): IRssItem[] => {
@@ -64,8 +108,29 @@ const filterItemsBySource = (): IRssItem[] => {
 }
 
 const filteredItems = computed(() =>{
-  return filterItemsBySource();
-})
+  const sourceItems = filterItemsBySource();
+  const normalizedSearch = search.value.toLowerCase();
+
+  if (!normalizedSearch) return sourceItems;
+
+  return sourceItems.filter((item) => {
+    return [
+      item.title,
+      item.description,
+      item.sourceName,
+    ].some((value) => value?.toLowerCase().includes(normalizedSearch));
+  });
+});
+
+const totalPages = computed(() => {
+  return Math.max(1, Math.ceil(filteredItems.value.length / itemsPerPage));
+});
+
+watch(totalPages, (value) => {
+  if (page.value > value) {
+    updateQuery({ page: value > 1 ? value : null });
+  }
+});
 
 const totalPageItems = computed(() => {
   const start = (page.value - 1) * itemsPerPage;

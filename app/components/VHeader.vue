@@ -10,10 +10,16 @@
   </div>
 
   <div class="header__input">
-    <VInputSearch />
+    <VInputSearch v-model="search" />
   </div>
 </div>
 </template>
+
+<script setup lang="ts">
+const search = defineModel<string>('search', {
+  required: true,
+});
+</script>
 
 <style scoped lang="scss">
 .header {
