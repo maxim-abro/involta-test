@@ -4,7 +4,9 @@
       v-model:search="search"
       @clear-filters="clearFilters"
   />
+
   <hr>
+
   <VFilterPanel
     v-model:orientation="cardsOrientation"
     v-model:active-source="activeSource"
@@ -48,10 +50,11 @@
 import type { TOrientation } from "~/types/types.ts";
 import type {IRssItem} from "#server/types/rss.ts";
 import {useNewsFilters} from "~/composables/useNewsFilters.ts";
+import {useLocalStorage} from "~/composables/useLocalStorage.ts";
 
 const { data: items, pending } = await useAsyncData('news', () => $fetch('/api/rss'));
 
-const cardsOrientation = ref<TOrientation>('vertical');
+const cardsOrientation = useLocalStorage<TOrientation>('cards-orientation', 'horizontal');
 
 const {
   clearFilters,

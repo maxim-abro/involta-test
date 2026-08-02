@@ -53,7 +53,7 @@ export const useNewsFilters = () => {
       updateQuery({ source: value, page: null });
     },
   });
-  const search = computed({
+  const search = computed<string>({
     get() {
       return getQueryValue(route.query.q) ?? '';
     },
