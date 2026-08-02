@@ -1,75 +1,8 @@
-# Nuxt Minimal Starter
+# Тестовое задание для Involta.
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[Ссылка на тестовое задание](https://www.figma.com/file/7CWWZqtl8E8iNJAgWuGnfI/%D0%A2%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5?node-id=23%3A0&t=vYpaCUqc3cO0FEau-0)
 
-## Setup
-
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Мои уточнения по заданию.
+1. Я использовал localStorage, как и написано в задании, но считаю, что лучше использовать cookies, чтобы можно было получить данные на стороне сервере, а не клиента. Из-за использования localStorage я не смог разобраться с дёрганием при загрузки страницы, если режим отображения карточки стоял не дефолтный. Есть вариант скрыть всё, пока не получу данные из localStorage, но по мне лучше небольшое дёргание, чем скрытие.
+2. Я не использовал Pinia, использовал вместо этого composables.
+3. По семантике и вёрстке я не заморачивался сильно, дела больше упор на бизнес-логику. По вёрстке можно было добавить разные анимации + пройтись по всем экранам от 1080p до мобилки.
