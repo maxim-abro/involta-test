@@ -4,7 +4,7 @@
     <div class="header__title__text">
       Список новостей
     </div>
-    <button class="header__title__button-reload">
+    <button class="header__title__button-reload" @click="clearFilters">
       <img src="~/assets/images/reload.svg" alt="Перезагрузка">
     </button>
   </div>
@@ -19,6 +19,12 @@
 const search = defineModel<string>('search', {
   required: true,
 });
+
+const emits = defineEmits<{
+  (e: 'clear-filters'): void;
+}>()
+
+const clearFilters = () => emits('clear-filters');
 </script>
 
 <style scoped lang="scss">
