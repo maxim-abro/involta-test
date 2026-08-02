@@ -1,5 +1,5 @@
 <template>
-  <nav class="pagination" aria-label="Пагинация">
+  <nav class="pagination">
     <button
       v-for="item in paginationItems"
       :key="item.key"
@@ -116,6 +116,7 @@ const selectPage = async (page: number) => {
 .pagination {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
 
   &__item {

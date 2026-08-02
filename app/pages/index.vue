@@ -80,8 +80,8 @@ watch(pending, () => {
 <style scoped lang="scss">
 .wrap-cards {
   display: grid;
-
   gap: 20px;
+  margin-bottom: 50px;
   &.horizontal {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
