@@ -12,7 +12,11 @@
     v-model:active-source="activeSource"
   />
 
-  <div class="wrap-cards" :class="[cardsOrientation]">
+  <div
+      v-if="!isError"
+      class="wrap-cards"
+      :class="[cardsOrientation]"
+  >
     <template v-if="cardsOrientation === 'horizontal'">
       <VHorizontalCard
           v-for="item of totalPageItems"
@@ -38,6 +42,12 @@
       />
     </template>
   </div>
+  <div v-else>
+    Ошибка!!!
+  </div>
+  <div v-if="!isError && isNewsEmpty">
+    Ничего не найдено
+  </div>
 
   <VPagination
       v-model="page"
@@ -48,35 +58,32 @@
 
 <script setup lang="ts">
 import type { TOrientation } from "~/types/types.ts";
-import type {IRssItem} from "#server/types/rss.ts";
 import {useNewsFilters} from "~/composables/useNewsFilters.ts";
 import {useLocalStorage} from "~/composables/useLocalStorage.ts";
 
-const { data: items, pending } = await useAsyncData('news', () => $fetch('/api/rss'));
+const { data: items, status } = await useAsyncData('news', () => $fetch('/api/rss'));
+
+const news = computed(() => items.value ?? []);
+
+const isError = computed(() => status.value === 'error');
+const isNewsEmpty = computed(() => totalPageItems.value.length === 0);
 
 const cardsOrientation = useLocalStorage<TOrientation>('cards-orientation', 'horizontal');
 
 const {
   clearFilters,
   updateQuery,
-  init,
   totalPageItems,
   activeSource,
   totalPages,
   search,
   page,
-} = useNewsFilters();
+} = useNewsFilters(news);
 
 watch(totalPages, (value) => {
   if (page.value > value) {
     updateQuery({ page: value > 1 ? value : null });
   }
-});
-
-watch(pending, () => {
-  if(!pending.value) init(items?.value ?? [])
-}, {
-  immediate: true,
 });
 </script>
 

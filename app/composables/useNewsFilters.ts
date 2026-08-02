@@ -1,13 +1,11 @@
-import type {IRssItem} from "#server/types/rss.ts";
+import type {IRssItem} from "#shared/types/rss.ts";
 
 
-export const useNewsFilters = () => {
-  const itemsPerPage = 4;
+export const useNewsFilters = (news: Ref<IRssItem[] | null>) => {
+  const itemsPerPage = 6;
 
   const route = useRoute();
   const router = useRouter();
-
-  const news = ref<IRssItem[]>([]);
 
   const getQueryValue = (value: unknown) => {
     return Array.isArray(value) ? value[0] : value;
@@ -32,7 +30,9 @@ export const useNewsFilters = () => {
     return news.value?.filter(item => item.sourceId === activeSource.value) ?? [];
   }
   const clearFilters = () => {
-    router.replace({});
+    router.replace({
+      query: {},
+    });
   };
 
   const page = computed({
@@ -85,15 +85,9 @@ export const useNewsFilters = () => {
     return filteredItems.value.slice(start, end);
   });
 
-
-  const init = (items: IRssItem[]) => {
-    news.value = items;
-  }
-
   return {
     clearFilters,
     updateQuery,
-    init,
 
     totalPageItems,
     activeSource,

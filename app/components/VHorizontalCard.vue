@@ -113,9 +113,6 @@ const dateText = computed(() => {
       margin-bottom: 20px;
       &__image {
         width: 100%;
-        img {
-
-        }
       }
       &__content {
         &__title {
@@ -125,15 +122,6 @@ const dateText = computed(() => {
         &__description {
           font-size: 14px;
         }
-      }
-    }
-
-    &__bottom {
-      &__source {
-
-      }
-      &__date {
-
       }
     }
   }
